@@ -1,0 +1,9 @@
+<div class="h-full">
+  <ng-container *ngIf="false; else mainLayout">
+    <app-login></app-login>
+  </ng-container>
+
+  <ng-template #mainLayout>
+    <main-layout></main-layout>
+  </ng-template>
+</div>

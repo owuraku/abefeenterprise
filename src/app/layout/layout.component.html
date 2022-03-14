@@ -1,0 +1,11 @@
+<ng-container>
+  <div class="col-12 h-5rem bg-green-400">
+    <p-menubar [model]="items" styleClass="bg-green-400"></p-menubar>
+  </div>
+  <div class="grid h-full">
+    <div class="col-3 bg-blue-200"></div>
+    <div class="col-9 bg-cyan-700">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</ng-container>
