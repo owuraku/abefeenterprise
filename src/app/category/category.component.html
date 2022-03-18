@@ -1,0 +1,45 @@
+<p-card>
+  <div class="p-fluid grid">
+    <div class="field col-12 md:col-10">
+      <input type="text" pInputText />
+    </div>
+    <div class="field col-12 md:col-2">
+      <p-splitButton label="Add" icon="pi pi-plus"></p-splitButton>
+    </div>
+  </div>
+  <p-table
+    [value]="category"
+    styleClass="p-datatable-gridlines"
+    responsiveLayout="scroll"
+  >
+    <!-- <ng-template pTemplate="caption"> Header </ng-template> -->
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-category>
+      <tr>
+        <td>{{ category.name }}</td>
+        <td>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-success mr-2"
+            (click)="editProduct(_category)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-warning"
+            (click)="deleteProduct(_category)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
