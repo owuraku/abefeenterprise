@@ -3,10 +3,10 @@ import { Component, Injectable, OnInit } from '@angular/core';
 // import { MessageService } from 'primeng/api';
 
 export interface Category {
-  id: number;
-  name: string;
-  timestamps: string;
-  status: number;
+  id?: number;
+  name?: string;
+  timestamps?: string;
+  status?: number;
 }
 @Injectable({
   providedIn: 'root',
@@ -14,26 +14,14 @@ export interface Category {
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styles: [
-    `
-      :host ::ng-deep .p-dialog .product-image {
-        width: 150px;
-        margin: 0 auto 2rem auto;
-        display: block;
-      }
-    `,
-  ],
   styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit {
   category: Category[] = [];
   _category!: Category;
-  productName = ['Provision', 'ColdStore'];
-  productDialog: boolean | undefined;
-
-  constructor() // private confirmationService: ConfirmationService,
-  // private messageService: MessageService
-  {}
+  productDialog: boolean = false;
+  submitted: boolean = false;
+  constructor() {} // private messageService: MessageService // private confirmationService: ConfirmationService,
 
   ngOnInit(): void {
     this.category = [
@@ -46,21 +34,13 @@ export class CategoryComponent implements OnInit {
     this.productDialog = true;
   }
 
-  deleteProduct(category: Category) {
-    // this.confirmationService.confirm({
-    //   message: 'Are you sure you want to delete ' + category.name + '?',
-    //   header: 'Confirm',
-    //   icon: 'pi pi-exclamation-triangle',
-    //   accept: () => {
-    //     this.category = this.category.filter((val) => val.id !== category.id);
-    //     // this._category = {};
-    //     this.messageService.add({
-    //       severity: 'success',
-    //       summary: 'Successful',
-    //       detail: 'Category Deleted',
-    //       life: 3000,
-    //     });
-    //   },
-    // });
+  deleteProduct(category: Category) {}
+  hideDialog() {
+    this.productDialog = false;
+    this.submitted = false;
+  }
+
+  saveProduct() {
+    this.submitted = true;
   }
 }
