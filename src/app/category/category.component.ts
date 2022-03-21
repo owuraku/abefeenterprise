@@ -1,6 +1,4 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-// import { ConfirmationService } from 'primeng/api';
-// import { MessageService } from 'primeng/api';
 
 export interface Category {
   id?: number;
@@ -21,7 +19,7 @@ export class CategoryComponent implements OnInit {
   _category!: Category;
   productDialog: boolean = false;
   submitted: boolean = false;
-  constructor() {} // private messageService: MessageService // private confirmationService: ConfirmationService,
+  constructor() {}
 
   ngOnInit(): void {
     this.category = [
