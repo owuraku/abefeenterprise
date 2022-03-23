@@ -1,0 +1,65 @@
+<p-card>
+  <div class="grid p-fluid">
+    <div class="col-6 md:col-3">
+      <p-button icon="pi pi-external-link" label="Make Payment"></p-button>
+    </div>
+    <div class="col-6 md:col-3">
+      <p-button
+        (click)="showBasicDialog()"
+        icon="pi pi-external-link"
+        label="Buy on credit"
+      ></p-button>
+    </div>
+  </div>
+  <p-dialog
+    header="Buy on credit"
+    [(visible)]="displayBasic"
+    class="dialog-content"
+  >
+    <div class="grid p-fluid">
+      <div class="col-12 md:row-6">
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon">Customer Name</span>
+          <input type="text" pInputText placeholder="name" />
+        </div>
+      </div>
+
+      <div class="col-12 md:row-6">
+        <div class="p-inputgroup">
+          <input
+            type="text"
+            pInputText
+            placeholder="On credit"
+            [readonly]="true"
+          />
+        </div>
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button label="Add" icon="pi pi-check" iconPos="right"></p-button>
+    </ng-template>
+  </p-dialog>
+
+  <p-table
+    [value]="saleRecord"
+    styleClass="p-datatable-gridlines"
+    responsiveLayout="scroll"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-saleRecord>
+      <tr>
+        <td>{{ saleRecord.item }}</td>
+        <td>{{ saleRecord.quantity }}</td>
+        <td>{{ saleRecord.price }}</td>
+        <td>{{ saleRecord.total }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

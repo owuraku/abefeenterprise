@@ -1,24 +1,28 @@
-import { ProductRoutes } from './product.routing';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductComponent } from './product.component';
+
+import { SaleRecordRoutingModule } from './sale-record-routing.module';
+import { SaleRecordComponent } from './sale-record.component';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-
 import { InputTextModule } from 'primeng/inputtext';
+import { TreeSelectModule } from 'primeng/treeselect';
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
-  declarations: [ProductComponent],
-  exports: [ProductComponent],
+  declarations: [SaleRecordComponent],
   imports: [
     CommonModule,
-    ProductRoutes,
+    SaleRecordRoutingModule,
     CardModule,
     TableModule,
     ButtonModule,
     DialogModule,
     InputTextModule,
+    TreeSelectModule,
+    FormsModule,
   ],
 })
-export class ProductModule {}
+export class SaleRecordModule {}
