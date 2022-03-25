@@ -13,10 +13,10 @@ import { InputTextModule } from 'primeng/inputtext';
   exports: [ProductComponent],
   imports: [
     CommonModule,
+    ProductRoutes,
     CardModule,
     TableModule,
     ButtonModule,
-    ProductRoutes,
     DialogModule,
     InputTextModule,
   ],
