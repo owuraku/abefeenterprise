@@ -12,8 +12,6 @@
     styleClass="p-datatable-gridlines"
     responsiveLayout="scroll"
   >
-    <!-- <ng-template pTemplate="caption"> Header </ng-template> -->
-
     <ng-template pTemplate="header">
       <tr>
         <th>Name</th>
@@ -29,17 +27,60 @@
             pRipple
             icon="pi pi-pencil"
             class="p-button-rounded p-button-success mr-2"
-            (click)="editProduct(_category)"
+            (click)="editProduct(category)"
           ></button>
           <button
             pButton
             pRipple
             icon="pi pi-trash"
             class="p-button-rounded p-button-warning"
-            (click)="deleteProduct(_category)"
+            (click)="deleteProduct(category)"
           ></button>
         </td>
       </tr>
     </ng-template>
   </p-table>
+  <p-dialog
+    class="category-dialog"
+    [(visible)]="productDialog"
+    header="Category Details"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <div class="p-field">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          pInputText
+          id="name"
+          [(ngModel)]="_category.name"
+          required
+          autofocus
+        />
+        <small class="p-invalid" *ngIf="submitted && !_category.name"
+          >Name is required.</small
+        >
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="saveProduct()"
+      ></button>
+    </ng-template>
+  </p-dialog>
 </p-card>
