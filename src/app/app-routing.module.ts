@@ -7,7 +7,18 @@ const routes: Routes = [
     path: 'auth',
     component: LoginComponent,
   },
-  { path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+  {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./pages/dashboard/dashboard.module').then(
+        (m) => m.DashboardModule
+      ),
+  },
+  {
+    path: 'debt',
+    loadChildren: () =>
+      import('./debtor/debtor.module').then((m) => m.DebtorModule),
+  },
 ];
 
 @NgModule({
