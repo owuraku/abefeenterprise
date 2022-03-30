@@ -8,6 +8,7 @@ const routes: Routes = [
     component: LoginComponent,
   },
   { path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+  { path: 'inventory', loadChildren: () => import('./inventory/inventory.module').then(m => m.InventoryModule) },
 ];
 
 @NgModule({
