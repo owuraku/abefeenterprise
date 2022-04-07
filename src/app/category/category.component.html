@@ -1,0 +1,88 @@
+<p-card>
+  <div class="p-fluid grid">
+    <div class="field col-12 md:col-10">
+      <input type="text" pInputText />
+    </div>
+    <div class="field col-12 md:col-2">
+      <p-button label="Add" icon="pi pi-plus"></p-button>
+    </div>
+  </div>
+  <p-table
+    [value]="categoryArray"
+    [columns]="columnDef"
+    styleClass="p-datatable-gridlines"
+    responsiveLayout="scroll"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-category>
+      <tr>
+        <td>{{ category.name }}</td>
+        <!-- <td>{{ category.status }}</td> -->
+        <td>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-success mr-2"
+            (click)="editCategory(category)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-warning"
+            (click)="deleteCategory(category.id)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <p-dialog
+    class="category-dialog"
+    [(visible)]="productDialog"
+    header="Category Details"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <div class="p-field">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          pInputText
+          id="name"
+          [(ngModel)]="_category.name"
+          required
+          autofocus
+        />
+        <small class="p-invalid" *ngIf="submitted && !_category.name"
+          >Name is required.</small
+        >
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="saveEdittedCategory(_category.id)"
+      ></button>
+    </ng-template>
+  </p-dialog>
+</p-card>
