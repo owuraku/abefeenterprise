@@ -35,11 +35,6 @@ export class CategoryComponent implements OnInit {
 
   name = new FormControl('');
   ngOnInit(): void {
-    // this.category = [
-    //   { id: 1, name: 'ColdStore', timestamps: '10-12-2020', status: 1 },
-    //   { id: 2, name: 'Provision', timestamps: '16-12-2020', status: 0 },
-    // ];
-
     this.categoryService.getCategory().subscribe((result: any) => {
       this.categoryArray = [...result];
       this.cdref.detectChanges();

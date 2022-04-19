@@ -7,7 +7,9 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [ProductComponent],
   exports: [ProductComponent],
@@ -19,6 +21,9 @@ import { InputTextModule } from 'primeng/inputtext';
     ButtonModule,
     DialogModule,
     InputTextModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AutoCompleteModule,
   ],
 })
 export class ProductModule {}
