@@ -1,69 +1,165 @@
-<p-card>
-  <p-button
-    (click)="showBasicDialog()"
-    icon="pi pi-external-link"
-    label="Add Product"
-  ></p-button>
-  <p-dialog
-    header="Add Product"
-    [(visible)]="displayBasic"
-    class="dialog-content"
-  >
-    <div class="grid p-fluid">
-      <div class="col-12 md:row-4">
-        <div class="p-inputgroup">
-          <span class="p-inputgroup-addon">Name</span>
-          <input type="text" pInputText placeholder="Product Name" />
+<p-button
+  (click)="showAddProductDialog()"
+  icon="pi pi-external-link"
+  label="Add Product"
+></p-button>
+<p-dialog
+  [(visible)]="displayBasic"
+  appendTo="body"
+  [modal]="true"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '40vw' }"
+>
+  <ng-template pTemplate="header">
+    <div class="flex align-items-center">
+      <span
+        class="flex align-items-center justify-content-center bg-cyan-100 text-cyan-800 mr-3 border-circle"
+        style="width: 32px; height: 32px"
+      >
+        <i class="pi pi-info text-lg"></i>
+      </span>
+      <div *ngIf="hideContent == 1">
+        <span class="font-medium text-2xl text-900">Add Product</span>
+      </div>
+      <div *ngIf="hideContent == 0">
+        <span class="font-medium text-2xl text-900">Edit Product</span>
+      </div>
+    </div>
+  </ng-template>
+
+  <div [formGroup]="productForm">
+    <div class="surface-card p-4 shadow-2 border-round p-fluid">
+      <div class="grid formgrid p-fluid">
+        <div class="field col-12 md:col-12">
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">Name</span>
+            <input
+              type="text"
+              pInputText
+              placeholder="Product Name"
+              formControlName="name"
+            />
+          </div>
         </div>
       </div>
 
-      <div class="col-12 md:row-4">
-        <div class="p-inputgroup">
-          <span class="p-inputgroup-addon">GH</span>
-          <input type="text" pInputText placeholder="Price" />
-          <span class="p-inputgroup-addon">.00</span>
+      <div class="grid formgrid p-fluid">
+        <div class="field col-12 md:col-12">
+          <p-autoComplete
+            label="Category"
+            [showEmptyMessage]="true"
+            [suggestions]="filtereredCategoryArray"
+            (completeMethod)="filterCategory($event)"
+            field="name"
+            [minLength]="1"
+            formControlName="category"
+            placeholder="category"
+          ></p-autoComplete>
+        </div>
+      </div>
+      <div class="grid formgrid p-fluid">
+        <div class="field col-12 md:col-12">
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">GH</span>
+            <input
+              type="number"
+              pInputText
+              placeholder="Selling Price"
+              formControlName="sellingPrice"
+            />
+            <span class="p-inputgroup-addon">.00</span>
+          </div>
+        </div>
+      </div>
+      <div class="grid formgrid p-fluid">
+        <div class="field col-12 md:col-12">
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">GH</span>
+            <input
+              type="number"
+              pInputText
+              placeholder="Cost Price"
+              formControlName="costPrice"
+            />
+            <span class="p-inputgroup-addon">.00</span>
+          </div>
         </div>
       </div>
 
-      <div class="col-12 md:row-4">
-        <div class="p-inputgroup">
-          <span class="p-inputgroup-addon">Category</span>
-          <input type="text" pInputText placeholder="Category" />
+      <div class="grid formgrid p-fluid" *ngIf="hideContent == 1">
+        <div class="field col-12 md:col-12">
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">Current Stock</span>
+            <input
+              type="number"
+              pInputText
+              placeholder="Current Stock"
+              formControlName="currentStock"
+            />
+          </div>
         </div>
       </div>
     </div>
-    <ng-template pTemplate="footer">
-      <p-button label="Add" icon="pi pi-check" iconPos="right"></p-button>
-    </ng-template>
-  </p-dialog>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="border-top-1 surface-border pt-3">
+      <button
+        pButton
+        pRipple
+        icon="pi pi-times"
+        (click)="displayBasic = false"
+        label="Cancel"
+        class="p-button-text"
+      ></button>
+      <button
+        *ngIf="hideContent == 1"
+        pButton
+        pRipple
+        icon="pi pi-check"
+        (click)="addProduct()"
+        label="Add Product"
+      ></button>
+      <button
+        *ngIf="hideContent == 0"
+        pButton
+        pRipple
+        icon="pi pi-check"
+        (click)="saveEditProduct(_product.id)"
+        label="Edit Product"
+      ></button>
+    </div>
+  </ng-template>
+</p-dialog>
 
-  <p-table
-    [value]="product"
-    styleClass="p-datatable-gridlines"
-    responsiveLayout="scroll"
-  >
-    <ng-template pTemplate="header">
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Category</th>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-product>
-      <tr>
-        <td>{{ product.name }}</td>
-        <td>{{ product.price }}</td>
-        <td>{{ product.category }}</td>
-        <td>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-success mr-2"
-          ></button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</p-card>
+<p-table
+  [value]="product"
+  styleClass="p-datatable-gridlines"
+  responsiveLayout="scroll"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Name</th>
+      <th>Selling Price</th>
+      <th>Cost Price</th>
+      <th>Category</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-product>
+    <tr>
+      <td>{{ product.name }}</td>
+      <td>{{ product.sellingPrice }}</td>
+      <td>{{ product.costPrice }}</td>
+      <td>{{ product.category.name }}</td>
+      <td>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-pencil"
+          class="p-button-rounded p-button-success mr-2"
+          (click)="showEditProductDialog(product)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
