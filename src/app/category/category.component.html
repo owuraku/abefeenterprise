@@ -4,37 +4,39 @@
       <input type="text" pInputText />
     </div>
     <div class="field col-12 md:col-2">
-      <p-splitButton label="Add" icon="pi pi-plus"></p-splitButton>
+      <p-button label="Add" icon="pi pi-plus"></p-button>
     </div>
   </div>
   <p-table
-    [value]="category"
+    [value]="categoryArray"
+    [columns]="columnDef"
     styleClass="p-datatable-gridlines"
     responsiveLayout="scroll"
   >
     <ng-template pTemplate="header">
       <tr>
-        <th>Name</th>
-        <th></th>
+        <th>Category</th>
+        <th>Actions</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-category>
       <tr>
         <td>{{ category.name }}</td>
+        <!-- <td>{{ category.status }}</td> -->
         <td>
           <button
             pButton
             pRipple
             icon="pi pi-pencil"
             class="p-button-rounded p-button-success mr-2"
-            (click)="editProduct(category)"
+            (click)="editCategory(category)"
           ></button>
           <button
             pButton
             pRipple
             icon="pi pi-trash"
             class="p-button-rounded p-button-warning"
-            (click)="deleteProduct(category)"
+            (click)="deleteCategory(category.id)"
           ></button>
         </td>
       </tr>
@@ -79,7 +81,7 @@
         label="Save"
         icon="pi pi-check"
         class="p-button-text"
-        (click)="saveProduct()"
+        (click)="saveEdittedCategory(_category.id)"
       ></button>
     </ng-template>
   </p-dialog>

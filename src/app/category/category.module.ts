@@ -6,8 +6,9 @@ import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
-import { SplitButtonModule } from 'primeng/splitbutton';
-import { FormsModule } from '@angular/forms';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 @NgModule({
   declarations: [CategoryComponent],
   imports: [
@@ -16,9 +17,10 @@ import { FormsModule } from '@angular/forms';
     CardModule,
     TableModule,
     InputTextModule,
-    SplitButtonModule,
+    ButtonModule,
     DialogModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class CategoryModule {}
