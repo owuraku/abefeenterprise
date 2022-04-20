@@ -1,0 +1,68 @@
+<p-dialog
+  header="Payment Details"
+  [(visible)]="paymentDetailsDialog"
+  [modal]="true"
+  class="paymentDialog"
+>
+  <p-card>
+    <ng-template pTemplate="content">
+      <div class="grid p-fluid">
+        <div class="field" class="col-12">
+          <label for="name">Date</label>
+          <input type="text" pInputText placeholder="Date" />
+        </div>
+
+        <div class="field" class="col-12">
+          <label for="name">Item</label>
+          <input type="text" pInputText placeholder="Item" />
+        </div>
+
+        <div class="field" class="col-12">
+          <label for="name">Quantity</label>
+          <input type="text" pInputText placeholder="Quantity" />
+        </div>
+
+        <div class="field" class="col-12">
+          <label for="name">Price</label>
+          <input type="text" pInputText placeholder="Price" />
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <p-button label="Pay" icon="pi pi-check" iconPos="right"></p-button>
+    </ng-template>
+  </p-card>
+</p-dialog>
+
+<p-card>
+  <p-table
+    [value]="customerDebt"
+    styleClass="p-datatable-gridlines"
+    responsiveLayout="scroll"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Customer</th>
+        <th>Debt</th>
+        <th></th>
+        <th>Last Payment</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customerDebt>
+      <tr>
+        <td>{{ customerDebt.name }}</td>
+        <td>{{ customerDebt.debt }}</td>
+        <td>
+          <button
+            pButton
+            type="button"
+            label="Make Payment"
+            class="p-button-success"
+            (click)="makePayment(customerDebt)"
+          ></button>
+        </td>
+        <td>{{ customerDebt.lastPayment }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

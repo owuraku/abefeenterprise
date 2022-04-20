@@ -27,6 +27,10 @@ const routes: Routes = [
   },
   { path: 'saleRecord', loadChildren: () => import('./sale-record/sale-record.module').then(m => m.SaleRecordModule) },
   { path: 'inventory', loadChildren: () => import('./inventory/inventory.module').then(m => m.InventoryModule) },
+   { path: 'debt',
+    loadChildren: () =>
+      import('./debtor/debtor.module').then((m) => m.DebtorModule),
+  },
 ];
 
 @NgModule({
