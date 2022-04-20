@@ -1,0 +1,88 @@
+<p-dialog
+  header="Payment Details"
+  [(visible)]="paymentDetailsDialog"
+  [modal]="true"
+  class="paymentDialog"
+>
+  <p-card>
+    <ng-template pTemplate="content"> </ng-template>
+    <ng-template pTemplate="footer">
+      <p-button label="update" icon="pi pi-check" iconPos="right"></p-button>
+    </ng-template>
+  </p-card>
+</p-dialog>
+<p-dialog
+  header="Stock Details"
+  [(visible)]="stockDetailsDialog"
+  [modal]="true"
+  class="paymentDialog"
+>
+  <p-card>
+    <ng-template pTemplate="content">
+      <p-table
+        [value]="inventory"
+        styleClass="p-datatable-gridlines"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Date</th>
+            <th>Balance Before</th>
+            <th>Balance After</th>
+            <th>Description</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-inventory>
+          <tr>
+            <td>12-04-2021</td>
+            <td>Added 200</td>
+            <td>300</td>
+            <td>300</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-template>
+  </p-card>
+</p-dialog>
+<p-card>
+  <p-table
+    [value]="inventory"
+    styleClass="p-datatable-gridlines"
+    responsiveLayout="scroll"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Product</th>
+        <th>Category</th>
+        <th>Stock</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-inventory>
+      <tr>
+        <td>{{ inventory.product }}</td>
+        <td>{{ inventory.category }}</td>
+        <td>{{ inventory.stock }}</td>
+        <td>
+          <button
+            pButton
+            type="button"
+            label="View"
+            class="p-button-success"
+            (click)="viewStock(inventory)"
+          ></button>
+        </td>
+        <td>
+          <button
+            pButton
+            type="button"
+            label="Update"
+            class="p-button-success"
+            (click)="updateStock(inventory)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
