@@ -8,6 +8,7 @@ const routes: Routes = [
     path: 'auth',
     component: LoginComponent,
   },
+<<<<<<< HEAD
   {
     path: 'dashboard',
     loadChildren: () =>
@@ -26,6 +27,10 @@ const routes: Routes = [
       import('./category/category.module').then((m) => m.CategoryModule),
   },
   { path: 'saleRecord', loadChildren: () => import('./sale-record/sale-record.module').then(m => m.SaleRecordModule) },
+=======
+  { path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+  { path: 'inventory', loadChildren: () => import('./inventory/inventory.module').then(m => m.InventoryModule) },
+>>>>>>> feature/inventoryUI
 ];
 
 @NgModule({
