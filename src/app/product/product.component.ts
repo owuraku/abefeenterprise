@@ -1,9 +1,9 @@
 import { ProductService } from './../service/product.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ProductDetails } from './product.model';
+import { CategoryDetails, ProductDetails } from './product.model';
 import { CategoryService } from '../service/category.service';
-
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -17,9 +17,8 @@ export class ProductComponent implements OnInit {
 
   displayBasic: boolean = false;
   editDialog = false;
-  selectedCategory: any[] = [];
-  filtereredCategoryArray: any[] = [];
-  category: any[] = [];
+
+  category: CategoryDetails[] = [];
 
   showAddProductDialog() {
     this.hideContent = 1;
@@ -53,7 +52,8 @@ export class ProductComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private cdref: ChangeDetectorRef,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -70,7 +70,13 @@ export class ProductComponent implements OnInit {
   addProduct() {
     const data = this.productForm.value;
     data.category = this.category[0].id;
-    this.productService.addProduct(data).subscribe((res) => console.log(res));
+    this.productService.addProduct(data).subscribe((res) =>
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Message Content',
+      })
+    );
   }
 
   saveEditProduct(id: string) {
@@ -82,19 +88,11 @@ export class ProductComponent implements OnInit {
       status: true,
     };
     this.productService.updateProduct(id, data).subscribe((res: any) => {
-      console.log(data);
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Message Content',
+      });
     });
-  }
-  filterCategory(event: any) {
-    let filtered: any[] = [];
-    let query = event.query;
-    for (let i = 0; i < this.category.length; i++) {
-      let cat = this.category[i];
-      if (cat.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(cat);
-      }
-    }
-
-    this.filtereredCategoryArray = filtered;
   }
 }

@@ -10,6 +10,9 @@ import { DialogModule } from 'primeng/dialog';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [ProductComponent],
   exports: [ProductComponent],
@@ -24,6 +27,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     AutoCompleteModule,
+    ToastModule,
+    DropdownModule,
   ],
+  providers: [MessageService],
 })
 export class ProductModule {}

@@ -1,3 +1,4 @@
+import { Category } from './../category/category.model';
 export interface ProductDetails {
   id: string;
   name: string;
@@ -13,5 +14,11 @@ export interface EditProductDetails {
   category: number;
   sellingPrice: number;
   costPrice: number;
+  status: boolean;
+}
+
+export interface CategoryDetails {
+  id: number;
+  name: string;
   status: boolean;
 }
