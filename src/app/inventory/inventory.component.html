@@ -1,15 +1,61 @@
+<p-toast position="top-right"></p-toast>
 <p-dialog
-  header="Payment Details"
-  [(visible)]="paymentDetailsDialog"
+  header="Update Product"
+  [(visible)]="productDetailsDialog"
   [modal]="true"
   class="paymentDialog"
 >
-  <p-card>
-    <ng-template pTemplate="content"> </ng-template>
-    <ng-template pTemplate="footer">
-      <p-button label="update" icon="pi pi-check" iconPos="right"></p-button>
-    </ng-template>
-  </p-card>
+  <ng-template pTemplate="content">
+    <div
+      class="surface-card p-4 shadow-2 border-round p-fluid"
+      [formGroup]="updateStockForm"
+    >
+      <div class="grid formgrid p-fluid">
+        <div class="field col-12 md:col-12">
+          <label for="integeronly">Update Number</label>
+          <p-inputNumber formControlName="updateNumber" inputId="integeronly">
+          </p-inputNumber>
+        </div>
+      </div>
+
+      <div class="grid formgrid p-fluid">
+        <div class="field col-12 md:col-12">
+          <label>Describe reason for update</label>
+          <span class="p-float-label">
+            <textarea
+              id="float-input"
+              rows="5"
+              cols="30"
+              pInputTextarea
+              formControlName="description"
+            ></textarea>
+            <label for="float-input">Description</label>
+          </span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Deduct Product"
+      icon="pi pi-minus-circle"
+      (click)="deductProduct(inventory.id)"
+      [disabled]="!updateStockForm.valid"
+    ></button>
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Add Product"
+      class="p-button-success"
+      icon="pi pi-plus-circle"
+      (click)="addProduct(inventory.id)"
+      [disabled]="!updateStockForm.valid"
+    ></button>
+  </ng-template>
 </p-dialog>
 <p-dialog
   header="Stock Details"
@@ -17,36 +63,34 @@
   [modal]="true"
   class="paymentDialog"
 >
-  <p-card>
-    <ng-template pTemplate="content">
-      <p-table
-        [value]="inventory"
-        styleClass="p-datatable-gridlines"
-        responsiveLayout="scroll"
-      >
-        <ng-template pTemplate="header">
-          <tr>
-            <th>Date</th>
-            <th>Balance Before</th>
-            <th>Balance After</th>
-            <th>Description</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-inventory>
-          <tr>
-            <td>12-04-2021</td>
-            <td>Added 200</td>
-            <td>300</td>
-            <td>300</td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </ng-template>
-  </p-card>
+  <ng-template pTemplate="content">
+    <p-table
+      [value]="stockHistoy"
+      styleClass="p-datatable-gridlines"
+      responsiveLayout="scroll"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Date</th>
+          <th>Balance Before</th>
+          <th>Balance After</th>
+          <th>Description</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-stock>
+        <tr>
+          <td>{{ stock.createdAt }}</td>
+          <td>{{ stock.balanceBefore }}</td>
+          <td>{{ stock.balanceAfter }}</td>
+          <td>{{ stock.description }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
 </p-dialog>
 <p-card>
   <p-table
-    [value]="inventory"
+    [value]="inventoryArray"
     styleClass="p-datatable-gridlines"
     responsiveLayout="scroll"
   >
@@ -55,32 +99,38 @@
         <th>Product</th>
         <th>Category</th>
         <th>Stock</th>
-        <th></th>
-        <th></th>
+        <th>Actions</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-inventory>
       <tr>
-        <td>{{ inventory.product }}</td>
-        <td>{{ inventory.category }}</td>
-        <td>{{ inventory.stock }}</td>
+        <td>{{ inventory.name }}</td>
+        <td>{{ inventory.category.name }}</td>
+        <td>{{ inventory.currentStock }}</td>
         <td>
-          <button
-            pButton
-            type="button"
-            label="View"
-            class="p-button-success"
-            (click)="viewStock(inventory)"
-          ></button>
-        </td>
-        <td>
-          <button
-            pButton
-            type="button"
-            label="Update"
-            class="p-button-success"
-            (click)="updateStock(inventory)"
-          ></button>
+          <div class="buttons">
+            <div class="child">
+              <button
+                pButton
+                pRipple
+                type="button"
+                label="View Product"
+                (click)="viewStock(inventory.id)"
+                icon="pi pi-eye"
+              ></button>
+            </div>
+            <div class="child">
+              <button
+                pButton
+                pRipple
+                type="button"
+                label="Update Product"
+                class="p-button-success"
+                (click)="updateStock(inventory)"
+                icon="pi pi-pencil"
+              ></button>
+            </div>
+          </div>
         </td>
       </tr>
     </ng-template>

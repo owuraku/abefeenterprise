@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-export interface InventoryDetails {
-  product: string;
-  category: string;
-  stock: number;
-}
-
+import { InventoryService } from './../service/inventory.service';
+import { ProductService } from './../service/product.service';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CategoryService } from '../service/category.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { InventoryDetails } from './inventory.model';
+import { MessageService } from 'primeng/api';
 export interface PaymentDetails {
   date: string;
   item: string;
@@ -24,30 +24,78 @@ export interface StockDetails {
   styleUrls: ['./inventory.component.scss'],
 })
 export class InventoryComponent implements OnInit {
-  inventory: InventoryDetails[] = [];
+  updateStockForm = new FormGroup({
+    description: new FormControl('', Validators.required),
+    updateNumber: new FormControl('', Validators.required),
+  });
 
-  paymentDetails: PaymentDetails[] = [];
-  paymentDetail: PaymentDetails | undefined;
-  stockDetails: StockDetails[] = [];
-  stockDetail: StockDetails | undefined;
-  paymentDetailsDialog: boolean = false;
+  inventoryArray: InventoryDetails[] = [];
+  inventory!: InventoryDetails;
+
+  // stockDetails: StockDetails[] = [];
+
+  stockHistoy: StockDetails[] = [];
+  stockDetail!: StockDetails;
+  productDetailsDialog: boolean = false;
   stockDetailsDialog: boolean = false;
-
-  constructor() {}
+  id: string = '';
+  constructor(
+    private productService: ProductService,
+    private cdref: ChangeDetectorRef,
+    private categoryService: CategoryService,
+    private inventoryService: InventoryService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
-    this.inventory = [{ product: 'Milo', category: 'provision', stock: 100 }];
-    this.paymentDetails = [
-      { date: '10-08-2022', item: 'Milo', quantity: 5, price: 10 },
-    ];
-  }
-  viewStock(stockDetails: StockDetails) {
-    this.stockDetail = { ...stockDetails };
-    this.stockDetailsDialog = true;
+    this.productService.getProduct().subscribe((res: any) => {
+      this.inventoryArray = [...res];
+      this.cdref.detectChanges();
+      console.log(res);
+      this.viewStock;
+    });
   }
 
-  updateStock(paymentDetails: PaymentDetails) {
-    this.paymentDetail = { ...paymentDetails };
-    this.paymentDetailsDialog = true;
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.viewStock;
+  }
+  viewStock(id: any) {
+    this.stockDetail = { ...id };
+    this.stockDetailsDialog = true;
+    this.inventoryService.productHistory(id).subscribe((res: any) => {
+      this.stockHistoy = [...res];
+      this.cdref.detectChanges();
+      console.log(res);
+    });
+  }
+
+  updateStock(_inventory: InventoryDetails) {
+    this.inventory = { ..._inventory };
+    this.productDetailsDialog = true;
+  }
+
+  addProduct(id: string) {
+    this.inventoryService
+      .addStock(id, this.updateStockForm.value)
+      .subscribe((data) =>
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Message Content',
+        })
+      );
+  }
+  deductProduct(id: string) {
+    this.inventoryService
+      .deductStock(id, this.updateStockForm.value)
+      .subscribe(() => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Message Content',
+        });
+      });
   }
 }
