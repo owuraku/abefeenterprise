@@ -1,6 +1,7 @@
+<p-toast></p-toast>
 <p-button
   (click)="showAddProductDialog()"
-  icon="pi pi-external-link"
+  icon="pi pi-plus"
   label="Add Product"
 ></p-button>
 <p-dialog
@@ -45,16 +46,13 @@
 
       <div class="grid formgrid p-fluid">
         <div class="field col-12 md:col-12">
-          <p-autoComplete
-            label="Category"
-            [showEmptyMessage]="true"
-            [suggestions]="filtereredCategoryArray"
-            (completeMethod)="filterCategory($event)"
-            field="name"
-            [minLength]="1"
+          <p-dropdown
+            [options]="category"
             formControlName="category"
-            placeholder="category"
-          ></p-autoComplete>
+            placeholder="Select Category"
+            optionLabel="name"
+            [showClear]="true"
+          ></p-dropdown>
         </div>
       </div>
       <div class="grid formgrid p-fluid">
@@ -142,7 +140,7 @@
       <th>Selling Price</th>
       <th>Cost Price</th>
       <th>Category</th>
-      <th></th>
+      <th>Action</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-product>
@@ -155,8 +153,10 @@
         <button
           pButton
           pRipple
+          type="button"
+          label="Success"
+          class="p-button-success"
           icon="pi pi-pencil"
-          class="p-button-rounded p-button-success mr-2"
           (click)="showEditProductDialog(product)"
         ></button>
       </td>
